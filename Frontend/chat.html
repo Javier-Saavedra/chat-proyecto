@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chat UCA</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="chat-layout">
+    <!-- Sidebar -->
+   <aside class="sidebar">
+  <div class="sidebar-top">
+    <h2 class="sidebar-title">Todos Nuestros Tutores</h2>
+
+    <input id="tutorSearch" class="search-input" placeholder="Search" />
+
+    <!-- Avatares recientes -->
+    <div class="recents-wrap">
+      <div class="small-title">TUTORES RECIENTES</div>
+      <div id="recents" class="recents"></div>
+    </div>
+
+    <!-- Lista completa de tutores -->
+    <ul id="tutorList" class="tutor-list"></ul>
+  </div>
+
+  <!-- Perfil usuario abajo -->
+  <div id="userProfile" class="user-profile">
+    <img src="./assets/tutors/rosa.png" alt="Usuario" class="user-avatar" />
+    <div class="user-meta">
+      <div class="welcome-text">Bienvenido</div>
+      <div id="usernameDisplay" class="username-text">Javier</div>
+    </div>
+    <button id="profileToggle" class="profile-toggle">▾</button>
+  </div>
+</aside>
+
+  <section class="chat-area">
+  <!-- Encabezado del chat -->
+  <header class="chat-header">
+  <img id="tutorAvatar" src="assets/tutors/juan.png" alt="Tutor" class="tutor-avatar" />
+  <div class="chat-header-info">
+    <h3 id="tutorName">Selecciona un tutor</h3>
+    <span id="tutorStatus" class="tutor-status">—</span>
+  </div>
+</header>
+
+  <!-- Historial de mensajes -->
+  <main id="messages" class="messages"></main>
+
+  <!-- Caja de texto -->
+  <footer class="chat-footer">
+    <input id="msgInput" type="text" placeholder="Escribe un mensaje..." />
+    <button id="sendBtn">Enviar</button>
+  </footer>
+</section>
+
+  </div>
+
+  <!-- Socket.io -->
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script src="app.js"></script>
+  <script>
+    // conectar botón al envío
+    document.getElementById("sendBtn").addEventListener("click", sendMessage);
+  </script>
+</body>
+</html>
