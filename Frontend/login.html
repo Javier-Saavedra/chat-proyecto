@@ -4,40 +4,54 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Echat - Login</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/login.css">
 </head>
-<body class="login-body">
-  <div class="login-container">
+<script src="js/login.js"></script>
+<body>
+  <div class="login-wrapper">
     
-    <!-- Caja de login -->
-    <div class="login-box">
-      <div class="login-image">
-        <img src="./assets/student.png" alt="Ilustración">
-      </div>
-      <h2>Echat</h2>
-      <form>
-        <input type="text" placeholder="Username" required>
-        <input type="password" placeholder="Password" required>
-        <a href="#" class="forgot">Forgot Password?</a>
-        <button type="submit" class="btn-login">Sign in</button>
-        <!-- reemplaza tu botón Google por esto -->
-        <a class="google-btn" href="/auth/google">
-        <img src="./assets/google.png">
-          Iniciar sesión con Google
-        </a>
+    <!-- Columna izquierda: Login -->
+    <div class="login-left">
+      <div class="login-box">
+        <div class="illustration">
+          <img src="img/student.png" alt="Ilustración" />
+        </div>
 
-      </form>
+        <h2 class="app-title">Echat</h2>
+
+        <form id="loginForm">
+          <div class="input-group">
+            <label for="username">Usuario</label>
+            <input type="text" id="username" placeholder="Ingresa tu usuario" required>
+          </div>
+
+          <div class="input-group">
+            <label for="password">Contraseña</label>
+            <input type="password" id="password" placeholder="Ingresa tu contraseña" required>
+          </div>
+
+          <button type="submit" class="btn-primary">Iniciar sesión</button>
+
+          <div class="divider">o</div>
+
+          <button type="button" class="btn-google">
+            <img src="img/google.png" alt="Google logo" />
+            Continuar con Google
+          </button>
+        </form>
+      </div>
     </div>
 
-    <!-- Texto de bienvenida -->
-    <div class="login-info">
-      <h1>Bienvenido a Echat</h1>
+    <!-- Columna derecha: Texto -->
+    <div class="login-right">
+      <h1>Bienvenido a <span>Echat</span></h1>
       <p>
-        Bienvenido al Software de la Universidad Católica Americana <br>
-        Para la Comunicación Estudiante - Tutor
+        Bienvenido al software de la Universidad<br>
+        Católica Americana para la comunicación<br>
+        Estudiante - Tutor
       </p>
     </div>
-
   </div>
 </body>
 </html>

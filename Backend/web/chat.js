@@ -1,30 +1,59 @@
+// backend/web/chat.js
 const broadcast = require("../utils/broadcast");
-const { updateUserStatus } = require("../models/users");
 
-function chatHandler(ws, wss) {
-  console.log("Nuevo cliente conectado");
+function setupChat(wss) {
+  const usersMap = new Map(); // username -> { ws, status }
 
-  ws.on("message", (message) => {
-    const data = JSON.parse(message);
+  function sendUsersList() {
+    const users = Array.from(usersMap.entries()).map(([username, u]) => ({
+      username,
+      status: u.status
+    }));
+    broadcast(wss.clients, { type: "users", users });
+  }
 
-    if (data.type === "join") {
-      ws.username = data.username;
-      updateUserStatus(data.username, "online");
+  wss.on("connection", (ws) => {
+    console.log("Nuevo cliente conectado");
 
-      broadcast(wss, { type: "system", message: `${data.username} se ha conectado` });
-    }
+    ws.on("message", (msg) => {
+      let data;
+      try { data = JSON.parse(msg); } catch (err) {
+        console.warn("Mensaje no JSON", err);
+        return;
+      }
 
-    if (data.type === "chat") {
-      broadcast(wss, { type: "chat", username: data.username, text: data.text });
-    }
-  });
+      // Login
+      if (data.type === "login" && data.username) {
+        ws.username = data.username;
+        usersMap.set(data.username, { ws, status: "online" });
 
-  ws.on("close", () => {
-    if (ws.username) {
-      updateUserStatus(ws.username, "offline");
-      broadcast(wss, { type: "system", message: `${ws.username} se ha desconectado` });
-    }
+        broadcast(wss.clients, { type: "system", text: `${data.username} se conectó` });
+        sendUsersList();
+      }
+
+      // Mensaje de chat
+      if (data.type === "chat") {
+        broadcast(wss.clients, { type: "chat", username: data.username, text: data.text });
+      }
+
+      // Cambio de estado
+      if (data.type === "status" && ws.username) {
+        if (usersMap.has(ws.username)) {
+          usersMap.get(ws.username).status = data.status;
+          broadcast(wss.clients, { type: "system", text: `${ws.username} está ${data.status}` });
+          sendUsersList();
+        }
+      }
+    });
+
+    ws.on("close", () => {
+      if (ws.username) {
+        usersMap.delete(ws.username);
+        broadcast(wss.clients, { type: "system", text: `${ws.username} se desconectó` });
+        sendUsersList();
+      }
+    });
   });
 }
 
-module.exports = chatHandler;
+module.exports = setupChat;

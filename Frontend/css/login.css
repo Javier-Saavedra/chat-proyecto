@@ -1,0 +1,140 @@
+/* Contenedor de 2 columnas */
+.login-wrapper {
+  display: flex;
+  height: 100vh;
+  background: linear-gradient(135deg, #2d0036, #3b006a, #6C63FF);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Columna izquierda (formulario) */
+.login-left {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-box {
+  background: rgba(25, 0, 40, 0.85);
+  padding: 3rem 2.5rem;   /* más padding dentro */
+  border-radius: 20px;
+  width: 100%;
+  max-width: 380px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  color: #fff;
+}
+
+/* Ilustración */
+.illustration {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.illustration img {
+  max-width: 100px;   /* reducimos tamaño */
+  height: auto;
+}
+
+/* Título */
+.app-title {
+  font-size: 1.6rem;
+  margin-bottom: 1.5rem;
+  color: #fff;
+}
+
+/* Inputs más proporcionados */
+.input-group {
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.input-group label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 0.6rem 0.9rem;   /* más compacto */
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  background: #fff;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+/* Botón principal */
+.btn-primary {
+  width: 100%;
+  padding: 0.7rem;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #6C63FF, #FF6584);
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 1rem 0;
+  font-size: 1rem;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+}
+
+/* Divider */
+.divider {
+  text-align: center;
+  margin: 0.8rem 0;
+  color: #aaa;
+  font-size: 0.85rem;
+}
+
+/* Botón Google */
+.btn-google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.95rem;
+}
+
+.btn-google img {
+  width: 18px;
+  height: 18px;
+}
+
+/* Columna derecha (texto de bienvenida) */
+.login-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem;
+  color: #fff;
+}
+
+.login-right h1 {
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+}
+
+.login-right h1 span {
+  color: #FF6584;
+}
+
+.login-right p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #ddd;
+}

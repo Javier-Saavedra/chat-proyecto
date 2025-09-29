@@ -1,11 +1,9 @@
 const express = require("express");
+const router = express.Router();
 const { getUsers } = require("../models/users");
 
-const router = express.Router();
-
-// GET /api/users
 router.get("/", (req, res) => {
-  const users = getUsers();
+  const users = getUsers().map(u => ({ username: u.username }));
   res.json(users);
 });
 

@@ -1,19 +1,16 @@
 const express = require("express");
-const { findUser, updateUserStatus } = require("../models/users");
-
 const router = express.Router();
+const { validateUser } = require("../models/users");
 
-// POST /api/login
-router.post("/", (req, res) => {
+router.post("/login", (req, res) => {
   const { username, password } = req.body;
+  const user = validateUser(username, password);
 
-  const user = findUser(username, password);
-  if (!user) {
-    return res.status(401).json({ message: "Credenciales incorrectas" });
+  if (user) {
+    res.json({ success: true, user: { username: user.username } });
+  } else {
+    res.status(401).json({ success: false, message: "Credenciales inválidas" });
   }
-
-  updateUserStatus(username, "online");
-  res.json({ id: user.id, username: user.username });
 });
 
 module.exports = router;

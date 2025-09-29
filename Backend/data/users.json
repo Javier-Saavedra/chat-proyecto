@@ -1,14 +1,5 @@
 [
-  {
-    "id": 1,
-    "username": "juan",
-    "password": "1234",
-    "status": "offline"
-  },
-  {
-    "id": 2,
-    "username": "maria",
-    "password": "abcd",
-    "status": "offline"
-  }
+  { "username": "admin", "password": "1234" },
+  { "username": "isabella", "password": "abcd" },
+  { "username": "michael", "password": "qwerty" }
 ]
