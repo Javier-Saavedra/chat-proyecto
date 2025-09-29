@@ -1,5 +1,22 @@
 [
-  { "username": "admin", "password": "1234" },
-  { "username": "isabella", "password": "abcd" },
-  { "username": "michael", "password": "qwerty" }
+  {
+    "username": "admin",
+    "password": "1234"
+  },
+  {
+    "username": "isabella",
+    "password": "abcd"
+  },
+  {
+    "username": "admin 2",
+    "password": "12345"
+  },
+  {
+    "username": "carlos",
+    "password": "1js34"
+  },
+  {
+    "username": "jose",
+    "password": "figma"
+  }
 ]

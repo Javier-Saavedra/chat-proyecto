@@ -1,56 +1,70 @@
-// backend/web/chat.js
 const broadcast = require("../utils/broadcast");
 
 function setupChat(wss) {
-  const usersMap = new Map(); // username -> { ws, status }
+  // 🔹 Guardar usuarios conectados
+  const connectedUsers = new Map();
 
-  function sendUsersList() {
-    const users = Array.from(usersMap.entries()).map(([username, u]) => ({
-      username,
-      status: u.status
-    }));
-    broadcast(wss.clients, { type: "users", users });
-  }
+  // 🔹 Historial de mensajes en memoria
+  const chatHistory = [];
 
   wss.on("connection", (ws) => {
-    console.log("Nuevo cliente conectado");
+    let currentUser = null;
 
     ws.on("message", (msg) => {
-      let data;
-      try { data = JSON.parse(msg); } catch (err) {
-        console.warn("Mensaje no JSON", err);
-        return;
+      const data = JSON.parse(msg);
+
+      if (data.type === "login") {
+        currentUser = data.username;
+        connectedUsers.set(ws, currentUser);
+
+        // 🔹 Enviar historial al nuevo usuario
+        ws.send(JSON.stringify({
+          type: "history",
+          messages: chatHistory
+        }));
+
+        // Avisar a todos que alguien se conectó
+        broadcast(wss.clients, {
+          type: "system",
+          text: `${data.username} se conectó`
+        });
+
+        // Enviar lista de usuarios conectados
+        broadcast(wss.clients, {
+          type: "users",
+          users: Array.from(connectedUsers.values())
+        });
       }
 
-      // Login
-      if (data.type === "login" && data.username) {
-        ws.username = data.username;
-        usersMap.set(data.username, { ws, status: "online" });
-
-        broadcast(wss.clients, { type: "system", text: `${data.username} se conectó` });
-        sendUsersList();
-      }
-
-      // Mensaje de chat
       if (data.type === "chat") {
-        broadcast(wss.clients, { type: "chat", username: data.username, text: data.text });
-      }
+        const newMessage = {
+          type: "chat",
+          username: data.username,
+          text: data.text
+        };
 
-      // Cambio de estado
-      if (data.type === "status" && ws.username) {
-        if (usersMap.has(ws.username)) {
-          usersMap.get(ws.username).status = data.status;
-          broadcast(wss.clients, { type: "system", text: `${ws.username} está ${data.status}` });
-          sendUsersList();
-        }
+        // 🔹 Guardar en historial
+        chatHistory.push(newMessage);
+
+        // Enviar a todos
+        broadcast(wss.clients, newMessage);
       }
     });
 
     ws.on("close", () => {
-      if (ws.username) {
-        usersMap.delete(ws.username);
-        broadcast(wss.clients, { type: "system", text: `${ws.username} se desconectó` });
-        sendUsersList();
+      if (currentUser) {
+        connectedUsers.delete(ws);
+
+        broadcast(wss.clients, {
+          type: "system",
+          text: `${currentUser} se desconectó`
+        });
+
+        // Actualizar lista de usuarios
+        broadcast(wss.clients, {
+          type: "users",
+          users: Array.from(connectedUsers.values())
+        });
       }
     });
   });
