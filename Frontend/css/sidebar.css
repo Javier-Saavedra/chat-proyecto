@@ -34,10 +34,6 @@
   margin-right: 0.6rem;
 }
 
-.status.online { background: #4caf50; }   /* verde */
-.status.busy { background: #f44336; }    /* rojo */
-.status.away { background: #ff9800; }    /* naranja */
-
 .sidebar ul li.me {
   background: rgba(255, 255, 255, 0.1);
   font-weight: bold;
@@ -49,4 +45,32 @@
   margin: 4px 0;
   border-radius: 6px;
 }
+.sidebar-user {
+  background: #2b2b3d;
+  color: white;
+  padding: 6px 10px;
+  margin: 4px 0;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+}
 
+.status-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 6px;
+  border-radius: 50%;
+}
+
+.status-dot.disponible {
+  background-color: #4caf50; /* verde */
+}
+
+.status-dot.ocupado {
+  background-color: #f44336; /* rojo */
+}
+
+.status-dot.ausente {
+  background-color: #ff9800; /* naranja */
+}
